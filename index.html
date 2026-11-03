@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Emergent Learning System — Physics TEKS</title><style>
+html,body{margin:0;height:100%;background:#080e1b;color:#eaf0ff;font:14px system-ui}#scene{position:fixed;inset:0}aside{position:absolute;top:16px;left:16px;max-width:310px;background:#101a2bdc;padding:18px;border:1px solid #35465c;border-radius:12px}h1{font-size:19px;margin:0 0 8px}p{line-height:1.5;color:#c3d0e4}#detail{position:absolute;bottom:18px;left:16px;right:16px;max-width:500px;background:#101a2be8;border:1px solid #35465c;border-radius:10px;padding:12px}button{background:#263955;color:white;border:1px solid #557096;border-radius:6px;padding:7px;cursor:pointer}small{color:#9eafca}
+</style></head><body><div id="scene"></div><aside><h1>Physics Knowledge Constellation</h1><p>Interactive 3D concept map inspired by Texas Physics TEKS. Drag to orbit, scroll to zoom, and select a star to inspect its concept.</p><small>Prototype concept graph, not a verified one-to-one standards transcription.</small><p><button id="reset">Reset view</button></p></aside><div id="detail">Select a star to explore its concept and connections.</div>
+<script type="module">
+import * as THREE from 'https://esm.sh/three@0.170.0';
+import {OrbitControls} from 'https://esm.sh/three@0.170.0/examples/jsm/controls/OrbitControls.js';
+const topics=[
+['Scientific practices',0x70e1dd,['Modeling','Measurement','Uncertainty','Experimental design','Data analysis']],
+['Motion',0x79aaff,['Position','Velocity','Acceleration','Graphs of motion','Projectile motion']],
+['Forces',0xffbd75,['Newton’s laws','Free-body diagrams','Friction','Gravity','Circular motion']],
+['Energy',0xffdf76,['Work','Kinetic energy','Potential energy','Conservation of energy','Power']],
+['Momentum',0xff8f9d,['Impulse','Momentum conservation','Collisions','Systems']],
+['Waves',0xbd9aff,['Frequency','Wavelength','Wave speed','Sound','Light']],
+['Electricity & magnetism',0x9cf59e,['Charge','Electric fields','Circuits','Magnetic fields','Electromagnetic induction']],
+['Thermal physics',0xf5a3d4,['Temperature','Heat transfer','Thermal energy','Energy systems']]
+];
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x080e1b);
+const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,1000);camera.position.set(0,12,34);
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);document.querySelector('#scene').appendChild(renderer.domElement);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.minDistance=9;controls.maxDistance=90;
+scene.add(new THREE.AmbientLight(0xffffff,1.4));
+const nodes=[],edges=[],pickables=[];const sphere=new THREE.SphereGeometry(1,16,12);
+function star(label,pos,color,size,parent){const mesh=new THREE.Mesh(sphere,new THREE.MeshBasicMaterial({color}));mesh.position.copy(pos);mesh.scale.setScalar(size);scene.add(mesh);nodes.push({label,mesh,parent});pickables.push(mesh);return mesh;}
+function edge(a,b,color=0x53677f){const geometry=new THREE.BufferGeometry().setFromPoints([a.position,b.position]);const line=new THREE.Line(geometry,new THREE.LineBasicMaterial({color,transparent:true,opacity:.48}));scene.add(line);edges.push(line)}
+const core=star('Physics',new THREE.Vector3(),0xffffff,.65,null);
+topics.forEach(([topic,color,children],i)=>{const angle=i*Math.PI*2/topics.length;const pos=new THREE.Vector3(Math.cos(angle)*11,Math.sin(i*2.4)*5,Math.sin(angle)*11);const hub=star(topic,pos,color,.44,'Physics');edge(core,hub,color);children.forEach((child,j)=>{const a=j*Math.PI*2/children.length+i*.3;const p=pos.clone().add(new THREE.Vector3(Math.cos(a)*3.2,Math.sin(a*1.6)*2.3,Math.sin(a)*3.2));const leaf=star(child,p,color,.22,topic);edge(hub,leaf,color);});});
+const dustGeo=new THREE.BufferGeometry(),pts=[];for(let i=0;i<850;i++){pts.push((Math.random()-.5)*130,(Math.random()-.5)*100,(Math.random()-.5)*130)}dustGeo.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));scene.add(new THREE.Points(dustGeo,new THREE.PointsMaterial({color:0x6b86b5,size:.065})));
+const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();renderer.domElement.addEventListener('click',e=>{mouse.x=e.clientX/innerWidth*2-1;mouse.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(pickables);if(hits.length){const n=nodes.find(x=>x.mesh===hits[0].object);document.querySelector('#detail').textContent=n.label+(n.parent?' · Parent domain: '+n.parent:' · Root of the knowledge graph');}});
+document.querySelector('#reset').onclick=()=>{camera.position.set(0,12,34);controls.target.set(0,0,0)};
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera)}animate();
+</script></body></html>
