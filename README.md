@@ -1,44 +1,51 @@
-# Emergence — Gravity & Time
+# Emergence — Physics pathway, version 2
 
-A focused 3D learning-universe prototype: two concepts, one free-fall experiment, and a small claim-specific evidence loop.
+Space → Time → Motion → Force → Gravity.
+
+Ten skills: position, displacement, elapsed time, speed, acceleration, net force, Newton's second law/inertia, weight, ideal free fall, and relative gravitational force.
+
+The map uses real 3D coordinates and perspective projection, with drag, pinch/wheel zoom, pause, and reset. Available work glows mint; completed work is quieter; locked work is dim with a lock shape; a later revisit glows amber. No slogans or checked/not-checked labels on the map.
 
 ## Preview
 
-Browser preview through a third-party static-file host:
-https://rawcdn.githack.com/PraxisIsPerfect/Emergent_learning_system/2a7684636d3288bd1a8dca27f51af53be53d7cbb/index.html
+Current-branch preview (third-party host; not verified end-to-end from the build environment):
+https://raw.githack.com/PraxisIsPerfect/Emergent_learning_system/main/index.html?v=2
 
-This host may show a destination-confirmation page. The preview URL has not been verified end-to-end from the build environment.
+Pinned version:
+https://rawcdn.githack.com/PraxisIsPerfect/Emergent_learning_system/3cf50e0824bc31137770611628ead5ae987937cc/index.html
 
-## GitHub Pages
+A previous pinned Gravity & Time URL will not update when refreshed. Use the current-branch URL for subsequent iterations. The host may cache changes.
 
-The existing deployment failed at `actions/configure-pages` because Pages was not enabled. To activate permanent hosting: Settings → Pages → Build and deployment → Source → GitHub Actions. Then rerun the latest deployment workflow. Expected address after a successful deployment: https://praxisisperfect.github.io/Emergent_learning_system/
+For local use, keep index.html, pathway-v2.css, and pathway-v2.js together and run `python3 -m http.server 8000`. No build step or runtime dependency. File-preview viewers may disable JavaScript; the static SVG fallback remains visible.
 
-## Run locally
+## Progression
 
-Keep index.html, styles.css, and app.js together. Serve the directory with `python3 -m http.server 8000`, then visit http://localhost:8000. No runtime libraries, API keys, fonts, package installation, or build process are required.
+Each skill requires two first-attempt, unassisted responses to new problems, using two authored context types. Both numerical values and a selected explanation must be correct. Hints, reopening instruction during a problem, or repeating a revealed problem are supported practice and do not satisfy a gate. Simulations and time spent do not unlock anything.
 
-## Included
+A later error flags the particular skill without removing earned prerequisites. An eligible later response clears its review flag. This policy is intentionally simple and is NOT validated knowledge tracing, spaced repetition, or proof of durable transfer. The question generators are finite, and some context changes are near transfer rather than substantially different tasks. Broader assessment and delayed project validation remain future work.
 
-- Two selectable concepts in actual 3D coordinates with perspective projection, orbit, pinch/wheel zoom, and pause/reset controls.
-- Responsive mobile layout and inline SVG fallback when JavaScript is blocked.
-- Analytic free-fall simulation: Earth/Moon, adjustable height, two masses, elapsed time, speed, and playback controls.
-- Eight authored checks across mass/free-fall, elapsed intervals, and time/distance relationships.
-- Context-specific review flags, hint and repetition tracking, browser-local evidence, JSON export, and confirmed reset.
+Progress is browser-local under `emergence-pathway-v2`. The last 500 attempts plus progression credits persist. Export and confirmed reset are available through the record icon. No cloud learner profile or AI tutor. Client-side storage is not tamper-resistant and is unsuitable for high-stakes certification.
 
-A missed or assisted check queues only its narrow claim. A new independent context can clear its review flag, not certify mastery. Simulation observation has zero evidentiary weight. Passing time alone never marks a skill forgotten.
+## Standards scope
 
-## Boundaries
+The route is an authored dependency sequence, not a TEKS-mandated order. It assumes signed numbers, arithmetic, units, and basic algebra. Space means position/displacement, not astronomy; Time means intervals, not relativity.
 
-No AI, camera, voice, account system, cloud learner profile, calibrated knowledge-tracing model, or validated spaced-repetition scheduler. Not an official TEKS mapping. Time here means elapsed-time measurement; gravitational time dilation is outside scope. The finite question bank eventually repeats; repeated items remain assisted practice.
+Partial connections: Physics 5.A, 5.C, 5.E, 5.F, and 5.H. Complete standards attainment is NOT claimed. Full graph construction, comprehensive free-body diagrams, scientific notation, and orbital predictions are not yet assessed.
+
+Primary sources:
+- https://teksguide.org/teks/phys5a/overview
+- https://teksguide.org/teks/phys5c/overview
+- https://teksguide.org/teks/phys5e/overview
+- https://teksguide.org/teks/phys5f/overview
+- https://teksguide.org/teks/phys5h/overview
+- https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/free-fall-without-air-resistance/
 
 ## Testing
 
-27 automated checks passed with no JavaScript errors in Chromium desktop and mobile emulation, including the JavaScript-disabled fallback, camera movement, analytic physics, assistance flags, review queue, export, reset, and persistence contract. HTML was injected because browser navigation was unavailable; persistence-contract tests used a localStorage mock. This is not a real-device Safari test or an end-to-end hosted deployment test.
+69 automated assertions passed, with zero JavaScript errors. Tested in Chromium desktop and mobile emulation at 320, 390, and 768 pixels; tested a JavaScript-disabled fallback. All ten skill gates were exercised, including wrong explanations, wrong values, hints, revisiting instruction, progression, later review flags, export, reset, camera controls, negative numeric input, simulation, and persistence contract.
 
-## Physics sources
+Important limits: the browser runner blocks navigation, so HTML was injected and localStorage was mocked for persistence-contract tests. A test-only accessor supplied generated task solutions to the UI automation; that accessor is NOT in the delivered JavaScript. These are functional tests, not learner validation, physical-iPhone Safari testing, or a hosted end-to-end test.
 
-https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/free-fall-without-air-resistance/
+Production source hashes were verified byte-for-byte against the published GitHub blobs. Older app.js and styles.css remain inactive legacy assets.
 
-https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/motion-of-free-falling-object/
-
-https://www.nist.gov/how-do-you-measure-it/how-do-you-measure-second
+The repository's existing Pages workflow previously failed because Pages was not enabled. Permanent Pages hosting still requires Settings → Pages → Source: GitHub Actions, followed by a successful workflow run. This build does not claim that hosting is active.
