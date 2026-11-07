@@ -1,51 +1,56 @@
-# Emergence — Physics pathway, version 2
+# Emergence — Physics Galaxy, version 3
 
-Space → Time → Motion → Force → Gravity.
+Physics is the galaxy. Six peer star systems contain major-concept planets. Specific capabilities are moons; Explore and Apply are asteroid activity markers. Missions reuse capability records across locations rather than creating duplicate skills.
 
-Ten skills: position, displacement, elapsed time, speed, acceleration, net force, Newton's second law/inertia, weight, ideal free fall, and relative gravitational force.
+## Open
 
-The map uses real 3D coordinates and perspective projection, with drag, pinch/wheel zoom, pause, and reset. Available work glows mint; completed work is quieter; locked work is dim with a lock shape; a later revisit glows amber. No slogans or checked/not-checked labels on the map.
-
-## Preview
-
-Current-branch preview (third-party host; not verified end-to-end from the build environment):
-https://raw.githack.com/PraxisIsPerfect/Emergent_learning_system/main/index.html?v=2
+Current branch preview (third-party host):
+https://raw.githack.com/PraxisIsPerfect/Emergent_learning_system/main/index.html?v=3
 
 Pinned version:
-https://rawcdn.githack.com/PraxisIsPerfect/Emergent_learning_system/3cf50e0824bc31137770611628ead5ae987937cc/index.html
+https://rawcdn.githack.com/PraxisIsPerfect/Emergent_learning_system/92d894ede874c5ffae3c0212038c7470a13f8a12/index.html
 
-A previous pinned Gravity & Time URL will not update when refreshed. Use the current-branch URL for subsequent iterations. The host may cache changes.
+The preview host was not accessible from the build environment, so no hosted end-to-end verification is claimed. GitHub source files were verified byte-for-byte against the locally tested files. Old pinned v1/v2 URLs do not update when refreshed. Hosting may cache the current-branch URL.
 
-For local use, keep index.html, pathway-v2.css, and pathway-v2.js together and run `python3 -m http.server 8000`. No build step or runtime dependency. File-preview viewers may disable JavaScript; the static SVG fallback remains visible.
+For local use, keep the six runtime files together and run `python3 -m http.server 8000`, then open localhost:8000. A single-file HTML edition is included in the downloadable build. No runtime libraries, fonts, API keys, or network services are required. HTML attachment viewers may disable JavaScript; an inline static SVG remains visible.
 
-## Progression
+## Scope
 
-Each skill requires two first-attempt, unassisted responses to new problems, using two authored context types. Both numerical values and a selected explanation must be correct. Hints, reopening instruction during a problem, or repeating a revealed problem are supported practice and do not satisfy a gate. Simulations and time spent do not unlock anything.
+Six systems: Mechanics; Waves & Light; Electricity & Magnetism; Thermal Physics; Quantum Physics; Spacetime & Relativity. Twenty-eight concept planets are mapped, with thirteen implemented capabilities across three systems. Dashed outlines denote unbuilt content, not missing learner prerequisites.
 
-A later error flags the particular skill without removing earned prerequisites. An eligible later response clears its review flag. This policy is intentionally simple and is NOT validated knowledge tracing, spaced repetition, or proof of durable transfer. The question generators are finite, and some context changes are near transfer rather than substantially different tasks. Broader assessment and delayed project validation remain future work.
+Working capabilities: position, displacement, elapsed time, speed, acceleration, net force, force/mass/acceleration, weight, ideal free fall, gravitational-force ratios, period/frequency, light travel time, and event coordinates. The last three are new in v3. The other systems and advanced relativity planets are roadmap outlines, not finished instruction.
 
-Progress is browser-local under `emergence-pathway-v2`. The last 500 attempts plus progression credits persist. Export and confirmed reset are available through the record icon. No cloud learner profile or AI tutor. Client-side storage is not tamper-resistant and is unsuitable for high-stakes certification.
+Two short guided missions are implemented: Drop timer and Signal relay. These reuse generated Apply tasks and are not yet authentic, open-ended projects.
 
-## Standards scope
+## Architecture
 
-The route is an authored dependency sequence, not a TEKS-mandated order. It assumes signed numbers, arithmetic, units, and basic algebra. Space means position/displacement, not astronomy; Time means intervals, not relativity.
+- `catalog-v3.js`: systems, planets, capability prerequisites, default ordering, missions. Containment and prerequisites are separate.
+- `learning-v3.js`: authored instruction, interactive SVG models, question generators, evidence gates, export/reset, storage migration.
+- `galaxy-v3.js`: perspective-projected 3D scene, navigation, responsive layout, mission routes.
+- `pathway-v2.css`: retained activity and base styles.
+- `galaxy-v3.css`: new galaxy shell and navigation styles.
+- `index.html`: entry point, static fallback, scope, source links, and dialogs.
 
-Partial connections: Physics 5.A, 5.C, 5.E, 5.F, and 5.H. Complete standards attainment is NOT claimed. Full graph construction, comprehensive free-body diagrams, scientific notation, and orbital predictions are not yet assessed.
+Only those files are active. Older `app.js`, `styles.css`, and `pathway-v2.js` remain legacy files in the repository. Tests and screenshots are included in the downloadable build.
 
-Primary sources:
-- https://teksguide.org/teks/phys5a/overview
-- https://teksguide.org/teks/phys5c/overview
-- https://teksguide.org/teks/phys5e/overview
-- https://teksguide.org/teks/phys5f/overview
-- https://teksguide.org/teks/phys5h/overview
-- https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/free-fall-without-air-resistance/
+## Progression and data
 
-## Testing
+Each capability needs two new first-attempt numerical responses plus correct selected explanations, in two authored context families and without hints. This is a provisional introductory-readiness rule, not validated mastery, spaced repetition, or proof of lasting transfer. Exploration and elapsed time give no credit. Later difficulty marks a narrow revisit without relocking downstream work. The finite problem generators may exhaust; repeated questions remain practice.
 
-69 automated assertions passed, with zero JavaScript errors. Tested in Chromium desktop and mobile emulation at 320, 390, and 768 pixels; tested a JavaScript-disabled fallback. All ten skill gates were exercised, including wrong explanations, wrong values, hints, revisiting instruction, progression, later review flags, export, reset, camera controls, negative numeric input, simulation, and persistence contract.
+Prerequisites branch: elapsed time opens oscillation; speed opens light timing; displacement plus elapsed time opens event coordinates. Learners need not finish all of Mechanics to reach spacetime foundations. This first spacetime activity does NOT assess time dilation or relativistic frame changes.
 
-Important limits: the browser runner blocks navigation, so HTML was injected and localStorage was mocked for persistence-contract tests. A test-only accessor supplied generated task solutions to the UI automation; that accessor is NOT in the delivered JavaScript. These are functional tests, not learner validation, physical-iPhone Safari testing, or a hosted end-to-end test.
+Browser-local storage key: `emergence-galaxy-v3`. Valid v2 credits are migrated once when available on the same browser origin. A different hosting domain cannot read old local storage. Export and confirmed reset are available from Learning record. Retains 500 detailed attempts plus credits and a seen-question index. No AI, analytics, microphone, camera, or learner server. Client-side assessment is not tamper-resistant and is unsuitable for high-stakes certification.
 
-Production source hashes were verified byte-for-byte against the published GitHub blobs. Older app.js and styles.css remain inactive legacy assets.
+## Standards
 
-The repository's existing Pages workflow previously failed because Pages was not enabled. Permanent Pages hosting still requires Settings → Pages → Source: GitHub Actions, followed by a successful workflow run. This build does not claim that hosting is active.
+The hierarchy and prerequisite graph are design decisions, not a TEKS-prescribed sequence. Existing activities address partial slices of PHYS.5.A/C/E/F/H; period and frequency connects to PHYS.8.C. Relativity bridges are extensions. Full standards attainment is not claimed.
+
+Sources are linked in Map guide: TEKS Guide Physics 5.C/E/F/H and 8.C; its wave-properties resource; NASA ideal free fall; Einstein Online on events and spacetime.
+
+## Verification
+
+68 automated functional assertions passed with no JavaScript runtime errors. Included: all thirteen capability gates; wrong values/reasons; hints; cross-system prerequisites; local-storage contract; v2 migration; export/reset; missions; camera controls; mobile widths 320/390/768; static fallback.
+
+Environment: Chromium desktop and mobile emulation. The browser runner blocks navigation, so tests injected the HTML and mocked localStorage for storage-contract tests. A test-only accessor supplied generated answers to automation; that accessor is absent from production. This is not learner validation, physical-iPhone Safari testing, real-origin persistence verification, or hosted end-to-end testing.
+
+The existing GitHub Pages workflow previously failed because Pages was not enabled. This release does not claim permanent Pages hosting is active.
